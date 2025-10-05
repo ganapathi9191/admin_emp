@@ -22,6 +22,6 @@ router.get('/get_assign_project/:id', getEmployeeProjectById);
 router.put('/update_assign_project/:id', updateEmployeeProjectById);
 
 // Delete project by ID
-router.delete('delete_assign_project/:id', deleteEmployeeProjectById);
+router.delete('/delete_assign_project/:id', deleteEmployeeProjectById);
 
 export default router;
