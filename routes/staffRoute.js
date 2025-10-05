@@ -15,7 +15,7 @@ router.get("/get_all_staffs", getAllStaff);
 router.get("/staff/:id", getStaffById);
 
 // Update staff by ID
-router.put("/update_staff/:id", updateStaffById);
+router.put("/update_staff/:id", upload.array("documents", 5),updateStaffById);
 
 // Delete staff by ID
 router.delete("/delete_staff/:id", deleteStaffById);
