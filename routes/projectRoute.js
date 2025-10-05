@@ -1,6 +1,11 @@
 import express from "express";
 import upload from "../utils/multer.js";
-import { createProject,getAllProjects,getProjectById,updateProjectById,deleteProjectById } from "../controllers/projectController.js";
+import {   createProject,
+  getAllProjects,
+  getProjectById,
+  updateProjectById,
+  updateProjectStatus,
+  deleteProjectById } from "../controllers/projectController.js";
 
 const router = express.Router();
 
@@ -14,6 +19,9 @@ router.get("/project/:id", getProjectById);
 
 // UPDATE PROJECT BY ID
 router.put("/project/:id", upload.single("file"), updateProjectById);
+
+// UPDATE ONLY STATUS (PATCH)
+router.patch("/:id/status", updateProjectStatus);
 
 // DELETE PROJECT BY ID
 router.delete("/project/:id", deleteProjectById);
