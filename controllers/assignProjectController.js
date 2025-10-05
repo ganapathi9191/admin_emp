@@ -1,9 +1,9 @@
-import Project from '../models/assignProjectModel.js';
+import AssignProject from '../models/assignProjectModel.js';
 
 // Create new project
 export const createProject = async (req, res) => {
   try {
-    const project = new Project(req.body);
+    const project = new AssignProject(req.body);
     await project.save();
     res.status(201).json({
       success: true,
@@ -22,7 +22,7 @@ export const createProject = async (req, res) => {
 // -----------------------
 export const getAllEmployeeProjects = async (req, res) => {
   try {
-    const projects = await Project.find();
+    const projects = await AssignProject.find();
     res.status(200).json({
       success: true,
       count: projects.length,
@@ -44,7 +44,7 @@ export const getAllEmployeeProjects = async (req, res) => {
 export const getEmployeeProjectById = async (req, res) => {
   try {
     const { id } = req.params;
-    const project = await Project.findById(id);
+    const project = await AssignProject.findById(id);
 
     if (!project) {
       return res.status(404).json({
@@ -81,7 +81,7 @@ export const updateEmployeeProjectById = async (req, res) => {
     if (sheet) updateData.sheet = sheet;
     if (projects) updateData.projects = projects;
 
-    const updatedProject = await Project.findByIdAndUpdate(
+    const updatedProject = await AssignProject.findByIdAndUpdate(
       id,
       updateData,
       { new: true, runValidators: true }
@@ -116,7 +116,7 @@ export const deleteEmployeeProjectById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deletedProject = await Project.findByIdAndDelete(id);
+    const deletedProject = await AssignProject.findByIdAndDelete(id);
 
     if (!deletedProject) {
       return res.status(404).json({
