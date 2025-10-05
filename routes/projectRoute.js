@@ -4,6 +4,7 @@ import {   createProject,
   getAllProjects,
   getProjectById,
   updateProjectById,
+  getProjectCounts,
   updateProjectStatus,
   deleteProjectById } from "../controllers/projectController.js";
 
@@ -16,6 +17,10 @@ router.get("/projects", getAllProjects);
 
 // GET PROJECT BY ID
 router.get("/project/:id", getProjectById);
+
+// GET project counts by category
+router.get("/counts", getProjectCounts);
+
 
 // UPDATE PROJECT BY ID
 router.put("/project/:id", upload.single("file"), updateProjectById);

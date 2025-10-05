@@ -116,6 +116,44 @@ export const updateProjectById = async (req, res) => {
   }
 };
 
+// GET PROJECT COUNTS BY CATEGORY
+export const getProjectCounts = async (req, res) => {
+  try {
+    // Aggregate counts by selectcategory
+    const categoryCounts = await Project.aggregate([
+      {
+        $group: {
+          _id: "$selectcategory",
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    // Format as key-value pairs
+    const counts = {
+      "mobile app": 0,
+      "website": 0,
+      "digital market": 0
+    };
+
+    categoryCounts.forEach(item => {
+      counts[item._id] = item.count;
+    });
+
+    // Total projects
+    const totalProjects = await Project.countDocuments();
+
+    res.status(200).json({
+      success: true,
+      totalProjects,
+      categoryCounts: counts
+    });
+
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error fetching project counts", error: err.message });
+  }
+};
+
 // UPDATE ONLY STATUS
 export const updateProjectStatus = async (req, res) => {
   try {
