@@ -6,6 +6,7 @@ import {   createProject,
   updateProjectById,
   getProjectCounts,
   updateProjectStatus,
+  updateProjectPayment,
   deleteProjectById } from "../controllers/projectController.js";
 
 const router = express.Router();
@@ -27,6 +28,10 @@ router.put("/project/:id", upload.single("file"), updateProjectById);
 
 // UPDATE ONLY STATUS (PATCH)
 router.patch("/:id/status", updateProjectStatus);
+
+// UPDATE PAYMENT INFO / STATUS
+router.patch("/payment/:id", updateProjectPayment);
+
 
 // DELETE PROJECT BY ID
 router.delete("/project/:id", deleteProjectById);

@@ -175,6 +175,51 @@ export const updateProjectStatus = async (req, res) => {
   }
 };
 
+
+// UPDATE PAYMENT INFO / PAYMENT STATUS
+export const updateProjectPayment = async (req, res) => {
+  try {
+    const { totalprice, advance, balancepayment, secondpayment, paydate, paymentStatus } = req.body;
+
+    // Ensure at least one field is provided
+    if (
+      totalprice === undefined &&
+      advance === undefined &&
+      balancepayment === undefined &&
+      secondpayment === undefined &&
+      paydate === undefined &&
+      paymentStatus === undefined
+    ) {
+      return res.status(400).json({ success: false, message: "No payment data provided" });
+    }
+
+    const updateData = {};
+    if (totalprice !== undefined) updateData.totalprice = Number(totalprice);
+    if (advance !== undefined) updateData.advance = Number(advance);
+    if (balancepayment !== undefined) updateData.balancepayment = Number(balancepayment);
+    if (secondpayment !== undefined) updateData.secondpayment = Number(secondpayment);
+    if (paydate) updateData.paydate = paydate;
+    if (paymentStatus) updateData.paymentStatus = paymentStatus; // pending, partially_paid, fully_paid
+
+    const updatedProject = await Project.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedProject) return res.status(404).json({ success: false, message: "Project not found" });
+
+    res.status(200).json({
+      success: true,
+      message: "Project payment info updated successfully",
+      data: updatedProject
+    });
+
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error updating payment info", error: err.message });
+  }
+};
+
 // DELETE PROJECT BY ID
 export const deleteProjectById = async (req, res) => {
   try {
