@@ -18,5 +18,5 @@ router.get("/staff/:id", getStaffById);
 router.put("/update_staff/:id", updateStaffById);
 
 // Delete staff by ID
-router.delete("/staff/:id", deleteStaffById);
+router.delete("/delete_staff/:id", deleteStaffById);
 export default router;
