@@ -1,0 +1,130 @@
+   Banner
+-------------
+
+✅ POST /api/banner – Create Banner
+
+
+
+📥 Inputs:
+
+    Key	            Type	Value Example
+bannerImage	    File	Upload multiple files using the same key
+title	             Text	Grand Launch
+name	             Text	Launch Banner
+description	    Text	Exciting new features released!
+
+
+
+{
+  "success": true,
+  "message": "Banner created",
+  "data": {
+    "_id": "664f8e89a671bcc5a0ec9a12",
+    "bannerImages": [
+      "https://res.cloudinary.com/demo/image/upload/banner1.jpg",
+      "https://res.cloudinary.com/demo/image/upload/banner2.jpg"
+    ],
+    "title": "Grand Launch",
+    "name": "Launch Banner",
+    "description": "Exciting new features released!",
+    "createdAt": "2025-07-16T12:10:33.000Z",
+    "updatedAt": "2025-07-16T12:10:33.000Z",
+    "__v": 0
+  }
+}
+
+✅ GET----------- /api/banner – Get All Banners
+
+{
+  "success": true,
+  "data": [
+    {
+      "_id": "664f8e89a671bcc5a0ec9a12",
+      "bannerImages": [
+        "https://res.cloudinary.com/demo/image/upload/banner1.jpg"
+      ],
+      "title": "Grand Launch",
+      "name": "Launch Banner",
+      "description": "Exciting new features released!",
+      "createdAt": "2025-07-16T12:10:33.000Z",
+      "updatedAt": "2025-07-16T12:10:33.000Z",
+      "__v": 0
+    }
+  ]
+}
+
+
+✅ GET------------/api/banner/:id – Get Banner by ID
+
+{
+  "success": true,
+  "data": {
+    "_id": "664f8e89a671bcc5a0ec9a12",
+    "bannerImages": [
+      "https://res.cloudinary.com/demo/image/upload/banner1.jpg"
+    ],
+    "title": "Grand Launch",
+    "name": "Launch Banner",
+    "description": "Exciting new features released!",
+    "createdAt": "2025-07-16T12:10:33.000Z",
+    "updatedAt": "2025-07-16T12:10:33.000Z",
+    "__v": 0
+  }
+}
+
+✅ PUT---------------/api/banner/:id – Update Banner
+
+Key	            Type	Value Example
+bannerImage    	    File	(optional) Upload new images
+title	            Text	Updated Title
+name	            Text	New Name
+description	    Text	Updated description goes here...
+
+{
+  "success": true,
+  "message": "Banner updated",
+  "data": {
+    "_id": "664f8e89a671bcc5a0ec9a12",
+    "bannerImages": [
+      "https://res.cloudinary.com/demo/image/upload/newBanner.jpg"
+    ],
+    "title": "Updated Title",
+    "name": "New Name",
+    "description": "Updated description goes here...",
+    "createdAt": "2025-07-16T12:10:33.000Z",
+    "updatedAt": "2025-07-16T12:20:10.000Z",
+    "__v": 0
+  }
+}
+
+✅ DELETE /api/banner/:id – Delete Banner
+
+Create New Service
+------------------
+
+✅ POST ---------------/api/services
+
+Key	    Type	Example Value
+logo	    File	Upload one image file (e.g., logo.png)
+image	    File	Upload multiple files. Use the key image                          again for each image
+
+title	    Text	AI Poster Generator
+description	Text	Create posters instantly with AI.
+benefits	Text	["Fast","HD Quality","Creative"] ✅ (JSON    format)
+conclusion	Text	Perfect for content creators.
+
+
+✅ GET---------------/api/services — Get All Services
+
+✅ PUT--------------/api/services/:id — Update a Service
+
+
+Key	       Type	Example
+logo	      File	Upload new logo if needed
+image	     File	Upload new image(s) if needed
+title	     Text	Updated Poster Tool
+description	Text	AI-powered creative poster tool
+benefits	Text	["Updated","Faster"] ✅ (JSON)
+conclusion	Text	Now even easier to use.
+
+✅ DELETE---------------/api/services/:id

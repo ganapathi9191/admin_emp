@@ -1,0 +1,130 @@
+
+
+1).///Register 
+
+------POST----------------http://localhost:5001/api/register
+
+{
+  "firstName": "Vinay",
+  "lastName": "Kumar",
+  "email": "vinay@example.com",
+  "phoneNumber": "9876543210",
+  "referralCodeUsed": "ABC12345"  // Optional
+}
+//output-----it will give OTP and referralCodeUsed
+
+{"message":"User registered. OTP sent.",
+            "userId":"686b5e9adeb26819d6c20f3c",
+            "otp":"1234",
+            "referralCode":"6KWON908"}
+
+
+
+
+
+//verify-Otp
+
+-------POST---------------http://localhost:5001/api/verify-otp
+
+{
+  "otp": "1234"
+}
+
+
+
+//set password
+-------post---------------http://localhost:5001/api/set-password
+
+{
+"phoneNumber":"9876543210"
+}
+
+
+
+//login
+
+-------post---------------http://localhost:5001/api/login
+
+{
+  "phoneNumber": "9876543210",
+  "password": "MySecure@123"
+}
+
+
+//Get Profile
+
+------get-----------http://localhost:5001/api/profile/:userId
+
+Example:
+GET http://localhost:5001/api/user/profile/64f9...
+
+
+
+//Update Profile
+
+-------put-----------http://localhost:5001/api/profile/:userId
+
+some details update
+
+{
+  "firstName": "Vinnu",
+  "lastName": "Updated"
+}
+
+
+
+
+//Add/Update Address
+
+---------put-----http://localhost:5001/api/address/:userId
+
+{
+  "addressLine1": "123 Main St",
+  "addressLine2": "Apt 4",
+  "city": "Hyderabad",
+  "state": "Telangana",
+  "postalCode": "500081",
+  "country": "India"
+}
+
+//get address
+
+-----get------------http://localhost:5001/api/address/:userId
+
+
+//Get Referral Info
+
+-------get--------http://localhost:5001/api/referral/:userId
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
