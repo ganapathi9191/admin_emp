@@ -34,16 +34,16 @@ mongoose.connect(process.env.MONGO_URI)
     console.log("✅ MongoDB Connected");
 
     // ✅ Create default admin if none exists
-    const existingAdmin = await Admin.findOne({ email: "admin@example.com" });
+    const existingAdmin = await Admin.findOne({ email: "info@pixelmindsolutions.com" });
     if (!existingAdmin) {
-      const hashedPassword = await bcrypt.hash("Admin@123", 10);
+      const hashedPassword = await bcrypt.hash("Pixelmind@25", 10);
       const defaultAdmin = new Admin({
-        adminName: "SuperAdmin",
-        email: "admin@example.com",
+        adminName: "PMS",
+        email: "info@pixelmindsolutions.com",
         password: hashedPassword
       });
       await defaultAdmin.save();
-      console.log("✅ Default admin created: admin@example.com / Admin@123");
+      console.log("✅ Default admin created: info@pixelmindsolutions.com / Pixelmind@25");
     }
   })
   .catch(err => console.error("Mongo Error:", err));
