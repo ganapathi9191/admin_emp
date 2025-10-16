@@ -50,7 +50,6 @@ export const createAttendance = async (req, res) => {
 
     // ✅ Create new attendance record
     const attendance = await Attendance.create({
-      staff: staff._id,
       staffId: staff._id,
       name: staff.staffName,
       date,
