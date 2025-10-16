@@ -10,8 +10,8 @@ import {
 
 const router = express.Router();
 
-router.post("/attendance", createAttendance);
-router.get("/attendance", getAllAttendance);
+router.post("/create-attendance", createAttendance);
+router.get("/getall-attendance", getAllAttendance);
 router.get("/attendance/:id", getAttendanceById);
 router.get("/attendance/staff/:staffId", getAttendanceByStaffId);
 router.put("/attendance/:id", updateAttendanceById);
