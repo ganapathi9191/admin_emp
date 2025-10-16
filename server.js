@@ -10,6 +10,7 @@ import Admin from "./models/adminModel.js";
 import assignProject from "./routes/assignProjectRoute.js"
 import project from "./routes/projectRoute.js"
 import bcrypt from "bcrypt";
+import attendance from "./routes/attendanceRoutes.js";
 
 
 dotenv.config();
@@ -55,6 +56,7 @@ app.use("/api", adminRoutes);
 app.use("/api", staffRoutes); // Fixed variable name
 app.use("/api", assignProject);
 app.use("/api",project);
+app.use("/api",attendance)
 
 // -----------------------
 // Socket.IO real-time events
