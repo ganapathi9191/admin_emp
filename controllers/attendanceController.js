@@ -77,7 +77,7 @@ export const createAttendance = async (req, res) => {
 export const getAllAttendance = async (req, res) => {
   try {
     const data = await Attendance.find().populate(
-      "staff",
+      "staffId",
       "staffName email role"
     );
     res
@@ -96,7 +96,7 @@ export const getAllAttendance = async (req, res) => {
 export const getAttendanceById = async (req, res) => {
   try {
     const attendance = await Attendance.findById(req.params.id).populate(
-      "staff",
+      "staffId",
       "staffName email role"
     );
     if (!attendance)
