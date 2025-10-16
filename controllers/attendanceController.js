@@ -1,30 +1,24 @@
 import Attendance from "../models/attendanceModel.js";
 import Staff from "../models/staffModel.js";
 
-// ✅ Create Attendance for Staff
+// ================= CREATE ATTENDANCE =================
 export const createAttendance = async (req, res) => {
   try {
     const { staffId, date, status, dayType, hoursWorked, workedHours } = req.body;
-
-    // Support both 'hoursWorked' and 'workedHours'
     const actualHours = hoursWorked || workedHours;
 
-    // Validate inputs
     if (!staffId || !date || !status)
       return res.status(400).json({
         success: false,
         message: "staffId, date, and status are required",
       });
 
-    // ✅ Check if staff exists (MongoDB _id)
-    const staff = await Staff.findById(staffId.trim());
+    // Fetch staff by MongoDB _id
+    const staff = await Staff.findById(staffId);
     if (!staff)
-      return res.status(404).json({
-        success: false,
-        message: "Staff not found",
-      });
+      return res.status(404).json({ success: false, message: "Staff not found" });
 
-    // ✅ Validation for status and day type
+    // Validate day type
     if (status === "present" && !dayType)
       return res.status(400).json({
         success: false,
@@ -37,9 +31,9 @@ export const createAttendance = async (req, res) => {
         message: "Hours worked are required for half-day attendance",
       });
 
-    // ✅ Prevent duplicate attendance for same staff & date
+    // Prevent duplicate attendance for same staff & date
     const existingAttendance = await Attendance.findOne({
-      staffId: staff._id,
+      staff: staff._id,
       date: new Date(date),
     });
     if (existingAttendance)
@@ -48,8 +42,9 @@ export const createAttendance = async (req, res) => {
         message: "Attendance already marked for this date",
       });
 
-    // ✅ Create new attendance record
+    // Create attendance
     const attendance = await Attendance.create({
+      staff: staff._id,
       staffId: staff._id,
       name: staff.staffName,
       date,
@@ -73,16 +68,13 @@ export const createAttendance = async (req, res) => {
   }
 };
 
-// ✅ Get All Attendance
+// ================= GET ALL ATTENDANCE =================
 export const getAllAttendance = async (req, res) => {
   try {
-    const data = await Attendance.find().populate(
-      "staffId",
-      "staffName email role"
-    );
-    res
-      .status(200)
-      .json({ success: true, count: data.length, data });
+    const data = await Attendance.find()
+      .populate("staff", "staffName email role")
+      .sort({ date: -1 });
+    res.status(200).json({ success: true, count: data.length, data });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -92,17 +84,13 @@ export const getAllAttendance = async (req, res) => {
   }
 };
 
-// ✅ Get Attendance by Record ID
+// ================= GET ATTENDANCE BY ID =================
 export const getAttendanceById = async (req, res) => {
   try {
-    const attendance = await Attendance.findById(req.params.id).populate(
-      "staffId",
-      "staffName email role"
-    );
+    const attendance = await Attendance.findById(req.params.id)
+      .populate("staff", "staffName email role");
     if (!attendance)
-      return res
-        .status(404)
-        .json({ success: false, message: "Attendance not found" });
+      return res.status(404).json({ success: false, message: "Attendance not found" });
 
     res.status(200).json({ success: true, data: attendance });
   } catch (error) {
@@ -114,19 +102,19 @@ export const getAttendanceById = async (req, res) => {
   }
 };
 
-// ✅ Get Attendance by Staff ID
+// ================= GET ATTENDANCE BY STAFF ID =================
 export const getAttendanceByStaffId = async (req, res) => {
   try {
     const { staffId } = req.params;
 
     const staff = await Staff.findById(staffId);
     if (!staff)
-      return res.status(404).json({
-        success: false,
-        message: "Staff not found",
-      });
+      return res.status(404).json({ success: false, message: "Staff not found" });
 
-    const attendance = await Attendance.find({ staffId }).sort({ date: -1 });
+    const attendance = await Attendance.find({ staff: staff._id })
+      .populate("staff", "staffName email role")
+      .sort({ date: -1 });
+
     res.status(200).json({
       success: true,
       count: attendance.length,
@@ -141,7 +129,7 @@ export const getAttendanceByStaffId = async (req, res) => {
   }
 };
 
-// ✅ Update Attendance by Record ID
+// ================= UPDATE ATTENDANCE BY ID =================
 export const updateAttendanceById = async (req, res) => {
   try {
     const { date, status, dayType, hoursWorked, workedHours } = req.body;
@@ -154,9 +142,7 @@ export const updateAttendanceById = async (req, res) => {
     );
 
     if (!updated)
-      return res
-        .status(404)
-        .json({ success: false, message: "Attendance not found" });
+      return res.status(404).json({ success: false, message: "Attendance not found" });
 
     res.status(200).json({
       success: true,
@@ -172,14 +158,12 @@ export const updateAttendanceById = async (req, res) => {
   }
 };
 
-// ✅ Delete Attendance by ID
+// ================= DELETE ATTENDANCE BY ID =================
 export const deleteAttendanceById = async (req, res) => {
   try {
     const deleted = await Attendance.findByIdAndDelete(req.params.id);
     if (!deleted)
-      return res
-        .status(404)
-        .json({ success: false, message: "Attendance not found" });
+      return res.status(404).json({ success: false, message: "Attendance not found" });
 
     res.status(200).json({
       success: true,
