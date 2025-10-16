@@ -1,6 +1,15 @@
 import mongoose from "mongoose";
 
 const attendanceSchema = new mongoose.Schema({
+    staff: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Staff", // Reference to Staff model
+        required: true,
+    },
+    staffId: {
+        type: String,
+        required: true,
+    },
     name: { type: String, required: true },
     date: { type: Date, required: true },
     status: {
