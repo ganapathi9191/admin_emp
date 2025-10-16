@@ -36,7 +36,13 @@ const staffSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true
-  }
+  },
+  attendance: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Attendance", // references Attendance collection
+    },
+  ],
 }, { 
   timestamps: true 
 });
