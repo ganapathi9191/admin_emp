@@ -29,6 +29,7 @@ const attendanceSchema = new mongoose.Schema({
         required: function () {
             return this.status === "present" && this.dayType === "halfDay";
         },
+        default:8,
     },
 });
 
